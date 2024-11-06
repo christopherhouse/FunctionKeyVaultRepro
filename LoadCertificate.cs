@@ -31,13 +31,13 @@ namespace FuncKvRepro
 
             try
             {
-                var cert = new X509Certificate2(Convert.FromBase64String(envVariableValue));
-
+                var cert = new X509Certificate2(Convert.FromBase64String(envVariableValue!));
+                _logger.LogInformation("Successfully loaded certificate data into X509Certificate2 instance");
                 // Create an MD5 hash of the environment variable value.  Assign the hash to a variablle
                 // named certHash
                 var certHash = string.Empty;
                 using var md5 = MD5.Create();
-                var inputBytes = Encoding.ASCII.GetBytes(envVariableValue);
+                var inputBytes = Encoding.ASCII.GetBytes(envVariableValue!);
                 var hashBytes = md5.ComputeHash(inputBytes);
                 var hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
                 result = new OkObjectResult(new {message = $"Hash is {hash}"});
