@@ -21,12 +21,13 @@ namespace FuncKvRepro
         [Function("LoadCertificate")]
         public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req)
         {
-            IActionResult result = null;
+            IActionResult result = null!;
             var envVariableValue = Environment.GetEnvironmentVariable(environmentVariable);
 
             if (string.IsNullOrEmpty(envVariableValue))
             {
-                _logger.LogError(new ArgumentException("null or empty environment variable"), $"Environment variable {environmentVariable} is not set."))
+                _logger.LogError(new ArgumentException("null or empty environment variable"),
+                    $"Environment variable {environmentVariable} is not set.");
             }
 
             try
